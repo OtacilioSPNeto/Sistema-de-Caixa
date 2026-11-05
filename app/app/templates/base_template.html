@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>{% block title %}{% endblock %}</title>
+	{% block styles %}
+	{% endblock %}
+	{% block links %}
+	{% endblock %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='base_template.css') }}" />
+</head>
+<body>
+	{% block content %}
+
+	{% endblock %}
+
+  	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+	<script src="{{ url_for('static', filename='base_template.js') }}?v=3"></script>
+	{% block scripts %}
+
+	{% endblock %}
+</body>
+</html>

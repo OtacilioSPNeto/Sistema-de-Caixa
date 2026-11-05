@@ -1,0 +1,130 @@
+{# Home page #}
+{% extends 'base_template.html' %}
+
+{% block title %}Tela Inicial{% endblock %}
+
+{% block content %}
+<div class="app-wrapper">
+
+    <div class="main-area">
+
+        <!-- Menu Superior -->
+<header class="topbar">
+    <div class="nav-group">
+        <a href="/" class="topbar-btn active">
+            <img src="/static/icones/Home.png" alt="Home">
+            HOME
+        </a>
+        <div class="nav-sub pinned">
+            <a href="/ponto-de-venda/index.html" class="topbar-btn">
+                <img src="/static/icones/Adicionar.png" alt="PDV">
+                NOVA CONTA
+            </a>
+            <a href="/vendas/index.html" class="topbar-btn">
+                <img src="/static/icones/Documento.png" alt="Vendas">
+                HISTÓRICO DE VENDAS
+            </a>
+            <a onclick="handleNavAction('home', 'cadastrar-funcionario')" class="topbar-btn" id="cadastrar-funcionario" style="cursor:pointer;">
+                <img src="/static/icones/Adicionar.png" alt="Cadastrar Funcionário">
+                NOVO FUNCIONÁRIO
+            </a>
+        </div>
+    </div>
+    <div class="nav-group">
+        <a href="/clientes/index.html" class="topbar-btn">
+            <img src="/static/icones/Clientes.png" alt="Clientes">
+            CLIENTES
+        </a>
+        <div class="nav-sub">
+            <a onclick="handleNavAction('clientes', 'cadastrar-cliente')" class="topbar-btn" style="cursor:pointer;">
+                <img src="/static/icones/Adicionar.png" alt="Cadastrar Cliente">
+                CADASTRAR CLIENTE
+            </a>
+            <a onclick="handleNavAction('clientes', 'procurar-cadastro')" class="topbar-btn" style="cursor:pointer;">
+                <img src="/static/icones/ProcurarCadastro.png" alt="Procurar">
+                PROCURAR CADASTRO
+            </a>
+        </div>
+    </div>
+    <div class="nav-group">
+        <a href="/produtos/index.html" class="topbar-btn">
+            <img src="/static/icones/Produto.png" alt="Produtos">
+            ESTOQUE
+        </a>
+        <div class="nav-sub">
+            <a onclick="handleNavAction('produtos', 'cadastrar-produto')" class="topbar-btn" style="cursor:pointer;">
+                <img src="/static/icones/Adicionar.png" alt="Cadastrar Produto">
+                CADASTRAR PRODUTO
+            </a>
+            <a onclick="handleNavAction('produtos', 'procurar-produto')" class="topbar-btn" style="cursor:pointer;">
+                <img src="/static/icones/ProcurarProduto.png" alt="Procurar Produto">
+                PROCURAR PRODUTO
+            </a>
+            <a onclick="handleNavAction('produtos', 'estoque-baixo')" class="topbar-btn" style="cursor:pointer;">
+                <img src="/static/icones/olho.png" alt="Estoque Baixo">
+                ESTOQUE BAIXO
+            </a>
+        </div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <a href="#" class="topbar-btn" title="Usuario autenticado">
+        <img src="/static/icones/Login.png" alt="Perfil">
+        {{ current_user.username }}
+    </a>
+    <form method="post" action="{{ url_for('auth.logout') }}">
+        <button type="submit" class="topbar-btn topbar-action">
+            <img src="/static/icones/Desligar.png" alt="Sair">
+            Sair
+        </button>
+    </form>
+</header>
+
+    <main class="page-content home-page">
+        <!-- Estado vazio -->
+        <div class="empty-state" id="home-empty">
+            <img src="/static/icones/Gato.png" alt="Nenhuma operação">
+        </div>
+
+        <!-- Lista de contas do dia -->
+        <div id="home-contas" style="display:none;">
+            <h2 class="section-title">Contas do Dia</h2>
+            <div class="contas-list" id="contas-list"></div>
+        </div>
+    </main>
+
+    </div>
+</div>
+
+<!-- Modal Cadastrar Funcionário -->
+<div class="modal-overlay" id="modal-cadastrar-funcionario" onclick="fecharModal('modal-cadastrar-funcionario')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <button class="xmodal" onclick="fecharModal('modal-cadastrar-funcionario')">✕</button>
+        <img src="/static/icones/Login.png" alt="Funcionário" class="modal-icon">
+        <h2 class="modal-title">CADASTRAR FUNCIONÁRIO</h2>
+
+        <label>Nome <span style="color:red">*</span></label>
+        <input type="text" id="func-nome" placeholder="">
+
+        <label>Sobrenome</label>
+        <input type="text" id="func-sobrenome" placeholder="">
+
+        <label>Telefone <span style="color:red">*</span></label>
+        <input type="text" id="func-telefone" placeholder="">
+
+        <label>CPF</label>
+        <input type="text" id="func-cpf" placeholder="">
+
+        <label>Email</label>
+        <input type="email" id="func-email" placeholder="">
+
+        <label>Usuário <span style="color:red">*</span></label>
+        <input type="text" id="func-username" placeholder="">
+
+        <label>Senha <span style="color:red">*</span></label>
+        <input type="password" id="func-senha" placeholder="">
+
+        <button class="modal-btn" onclick="cadastrarFuncionario()">Enviar</button>
+    </div>
+</div>
+
+{% endblock %}
